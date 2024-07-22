@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="mytheme">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VideoAIChatbot Manager</title>
+<script defer src="js/settings.bundle.js"></script></head>
+<body>
+    <div id="react-app"></div>
+    <script type="text/javascript" src="js/jquery-3.7.1.js"></script>
+    <script type="text/javascript" src="js/qwebchannel.js"></script>
+    
+        <script src="http://localhost:35729/livereload.js"></script>
+    
+    <script type="text/javascript">
+        window.setPageFromQt = function(page) {
+            console.log("setPageFromQt", page);
+            window.location.hash = page;
+        }
+         window.onload = function() { 
+            window.webChannel = new QWebChannel(qt.webChannelTransport, function(channel)
+            {
+                window.webViewManager = channel.objects.webViewManager;
+                //window.qtInterface.log("Hello from JavaScript");
+                // Connect to a signal:
+                // channel.objects.foo.mySignal.connect(function() {
+                //     // This callback will be invoked whenever the signal is emitted on the C++/QML side.
+                //     console.log(arguments);
+                // });
+            });
+        }
+    </script>
+</body>
+</html>

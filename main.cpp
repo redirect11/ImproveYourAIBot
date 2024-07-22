@@ -6,8 +6,24 @@
 
 int main(int argc, char *argv[])
 {
-    QApplication a(argc, argv);
+    qInfo() << "Starting application";
+    qInfo() << "Arguments: " << argc;
+    char ARG_DISABLE_WEB_SECURITY[] = "--disable-web-security";
+    char ARG_ENABLE_FILE_ACCESS[] = "--enable-file-access-from-files";
+    char ARG_ALLOW_CORS[] = "--webEngineArgs";
+    char ARG_ALLOW_CORS_ARGS[] = "--remote-allow-origin=*";
+    int newArgc = argc+1+1+1+1+1;
+    char** newArgv = new char*[newArgc];
+    for(int i=0; i<argc; i++) {
+        newArgv[i] = argv[i];
+    }
+    newArgv[argc] = ARG_ALLOW_CORS;
+    newArgv[argc+1] = ARG_ALLOW_CORS_ARGS;
+    newArgv[argc+2] = ARG_DISABLE_WEB_SECURITY;
+    newArgv[argc+3] = ARG_ENABLE_FILE_ACCESS;
+    newArgv[argc+4] = nullptr;
 
+    QApplication a(newArgc, newArgv);
     QTranslator translator;
     const QStringList uiLanguages = QLocale::system().uiLanguages();
     for (const QString &locale : uiLanguages) {
@@ -17,7 +33,15 @@ int main(int argc, char *argv[])
             break;
         }
     }
+
+    //print arguments
+    for(int i=0; i<newArgc; i++) {
+        qInfo() << "Argument " << i << ": " << newArgv[i];
+    }
+
     MainWindow w;
+    QObject::connect(&a, &QApplication::aboutToQuit, &w, &MainWindow::onAppQuit);
     w.show();
+
     return a.exec();
 }
