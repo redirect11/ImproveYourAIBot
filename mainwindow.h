@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QMap>
 #include <QComboBox>
+#include <QLabel>
 #include "webviewmanager.h"
 #include "webserver.h"
 
@@ -45,6 +46,7 @@ private:
     QComboBox *chatbotComboBox;
     QString currentChatbot;
     QMap<QString, QString> chatbots;
+    QLabel *urlLabel;
 };
 
 #endif // MAINWINDOW_H

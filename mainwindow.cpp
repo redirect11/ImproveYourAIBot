@@ -88,6 +88,9 @@ void MainWindow::setupToolbarActions()
     chatbotComboBox->resize(chatbotComboBox->width() + 20, chatbotComboBox->height() + 20);
     chatbotComboBox->setMinimumWidth(150);
     chatbotComboBox->setMinimumHeight(10);
+    layout->addWidget(new QLabel("URL: ", this));
+    this->urlLabel = new QLabel(this);
+    layout->addWidget(urlLabel);
     layout->addWidget(new QLabel("Chatbot: ", this));
     layout->addWidget(chatbotComboBox);
     dummy->setLayout(layout);
@@ -114,6 +117,7 @@ void MainWindow::addChatbot()
             if(chatbots.size() >= 1) {
                 ui->tabWidget->setTabVisible(1,true);
             }
+            this->urlLabel->setText(url);
         }
     }
 }
@@ -140,6 +144,7 @@ void MainWindow::selectChatbot(const QString &name)
     webViewManager->setBaseUrl(url);
     webViewManager->setCurrentChatbotName(name);
     webViewManager->loadPage(PAGE_PATH);
+    this->urlLabel->setText(url);
 }
 
 void MainWindow::loadChatbots()

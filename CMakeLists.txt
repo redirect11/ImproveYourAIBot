@@ -51,6 +51,7 @@ qt_add_executable(ImproveYourAIBot
 )
 qt_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
 
+
 target_link_libraries(${PROJECT_NAME} PRIVATE Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::WebEngineWidgets VideoTranscriber)
 
 if(${QT_VERSION} VERSION_LESS 6.1.0)

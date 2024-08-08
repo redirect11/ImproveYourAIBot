@@ -11,7 +11,7 @@ int main(int argc, char *argv[])
     char ARG_DISABLE_WEB_SECURITY[] = "--disable-web-security";
     char ARG_ENABLE_FILE_ACCESS[] = "--enable-file-access-from-files";
     char ARG_ALLOW_CORS[] = "--webEngineArgs";
-    char ARG_ALLOW_CORS_ARGS[] = "--remote-allow-origin=*";
+    char ARG_ALLOW_CORS_ARGS[] = "--remote-allow-origins=*";
     int newArgc = argc+1+1+1+1+1;
     char** newArgv = new char*[newArgc];
     for(int i=0; i<argc; i++) {
@@ -40,6 +40,9 @@ int main(int argc, char *argv[])
     }
 
     MainWindow w;
+    w.setWindowTitle("ImproveYourAIBot - v1.0 - CPU");
+    //w.setWindowIcon(QIcon(":/icons/favicon.ico"));
+    a.setWindowIcon(QIcon(":/icons/favicon.ico"));
     QObject::connect(&a, &QApplication::aboutToQuit, &w, &MainWindow::onAppQuit);
     w.show();
 
