@@ -4,6 +4,7 @@
 #include <QLocale>
 #include <QTranslator>
 
+
 int main(int argc, char *argv[])
 {
     qInfo() << "Starting application";
@@ -24,6 +25,7 @@ int main(int argc, char *argv[])
     newArgv[argc+4] = nullptr;
 
     QApplication a(newArgc, newArgv);
+        qInfo()  << "running path" << QCoreApplication::applicationDirPath();
     QTranslator translator;
     const QStringList uiLanguages = QLocale::system().uiLanguages();
     for (const QString &locale : uiLanguages) {
@@ -45,6 +47,7 @@ int main(int argc, char *argv[])
     a.setWindowIcon(QIcon(":/icons/favicon.ico"));
     QObject::connect(&a, &QApplication::aboutToQuit, &w, &MainWindow::onAppQuit);
     w.show();
+
 
     return a.exec();
 }

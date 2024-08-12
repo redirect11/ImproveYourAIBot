@@ -31,6 +31,7 @@ endif()
 
 set(TS_FILES ImproveYourAIBot_it_IT.ts)
 
+
 set(PROJECT_SOURCES
     main.cpp
     mainwindow.cpp
