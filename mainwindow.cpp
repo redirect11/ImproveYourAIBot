@@ -7,6 +7,7 @@
 #include <QWebEngineSettings>
 #include <QInputDialog>
 #include <QMessageBox>
+#include <QCoreApplication>
 
 #define PAGE_PATH "/app.html"
 
@@ -18,8 +19,11 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
     , webViewManager(new WebViewManager(this))
-    , server(new WebServer("0.0.0.0", 8000, SERVER_ROOT))
 {
+
+    std::string serverPath = QCoreApplication::applicationDirPath().toStdString() + "/" + SERVER_ROOT;
+    qInfo() << QString::fromStdString(serverPath);
+    this->server = new WebServer("0.0.0.0", 8000, serverPath.c_str());
     ui->setupUi(this);
     webViewManager->hide();
 
