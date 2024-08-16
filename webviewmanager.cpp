@@ -23,6 +23,8 @@ WebViewManager::WebViewManager(QWidget *parent)
     webEngineView->page()->settings()->setAttribute(QWebEngineSettings::LocalContentCanAccessFileUrls, true);
     webEngineView->page()->settings()->setAttribute(QWebEngineSettings::LocalContentCanAccessRemoteUrls, true);
     webEngineView->page()->settings()->setAttribute(QWebEngineSettings::AllowRunningInsecureContent, true);
+    webEngineView->page()->settings()->setAttribute(QWebEngineSettings::JavascriptCanAccessClipboard, true);
+    webEngineView->page()->settings()->setAttribute(QWebEngineSettings::JavascriptCanPaste, true);
 
     QWebChannel *channel = new QWebChannel(webEngineView->page());
     channel->registerObject(QStringLiteral("webViewManager"), this);

@@ -40,7 +40,7 @@ int main(int argc, char *argv[])
     }
 
     MainWindow w;
-    w.setWindowTitle("ImproveYourAIBot - v1.0 - CPU");
+    w.setWindowTitle("ImproveYourAIBot - v1.1 - CPU");
     //w.setWindowIcon(QIcon(":/icons/favicon.ico"));
     a.setWindowIcon(QIcon(":/icons/favicon.ico"));
     QObject::connect(&a, &QApplication::aboutToQuit, &w, &MainWindow::onAppQuit);
