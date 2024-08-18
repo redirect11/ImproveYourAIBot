@@ -11,8 +11,25 @@
 #include <QWebEngineProfile>
 #include <QWebEngineSettings>
 
+
+
 WebViewManager::WebViewManager(QWidget *parent)
     : QObject(parent), webEngineView(new QWebEngineView(parent)) {
+
+    this->page = new CustomWebEnginePage(this);
+
+    this->page->settings()->setAttribute(QWebEngineSettings::LocalContentCanAccessRemoteUrls, true);
+    this->page->settings()->setAttribute(QWebEngineSettings::LocalContentCanAccessFileUrls, true);
+    this->page->settings()->setAttribute(QWebEngineSettings::AllowRunningInsecureContent, true);
+    this->page->settings()->setAttribute(QWebEngineSettings::JavascriptCanAccessClipboard, true);
+    this->page->settings()->setAttribute(QWebEngineSettings::JavascriptCanPaste, true);
+    this->page->settings()->setAttribute(QWebEngineSettings::JavascriptCanOpenWindows, true);
+
+    QWebChannel *channel = new QWebChannel(this->page);
+    channel->registerObject(QStringLiteral("webViewManager"), this);
+    this->page->setWebChannel(channel);
+    this->webEngineView->setPage(this->page);
+
 
     qInfo() << QDir::currentPath() + "/assets/js/qwebchannel.js";
     QFileInfo jsFileInfo(QDir::currentPath() + "/assets/js/qwebchannel.js");
@@ -20,15 +37,6 @@ WebViewManager::WebViewManager(QWidget *parent)
     if (!jsFileInfo.exists())
         QFile::copy(":/qtwebchannel/qwebchannel.js", jsFileInfo.absoluteFilePath());
 
-    webEngineView->page()->settings()->setAttribute(QWebEngineSettings::LocalContentCanAccessFileUrls, true);
-    webEngineView->page()->settings()->setAttribute(QWebEngineSettings::LocalContentCanAccessRemoteUrls, true);
-    webEngineView->page()->settings()->setAttribute(QWebEngineSettings::AllowRunningInsecureContent, true);
-    webEngineView->page()->settings()->setAttribute(QWebEngineSettings::JavascriptCanAccessClipboard, true);
-    webEngineView->page()->settings()->setAttribute(QWebEngineSettings::JavascriptCanPaste, true);
-
-    QWebChannel *channel = new QWebChannel(webEngineView->page());
-    channel->registerObject(QStringLiteral("webViewManager"), this);
-    webEngineView->page()->setWebChannel(channel);
 
     // Connect to loadFinished signal to inject the authToken
     connect(webEngineView->page(), &QWebEnginePage::loadFinished, this, &WebViewManager::injectAuthToken);

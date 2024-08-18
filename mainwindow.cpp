@@ -11,9 +11,7 @@
 
 #define PAGE_PATH "/app.html"
 
-#ifndef SERVER_ROOT
-#define SERVER_ROOT "./assets"
-#endif
+
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -21,9 +19,16 @@ MainWindow::MainWindow(QWidget *parent)
     , webViewManager(new WebViewManager(this))
 {
 
-    std::string serverPath = QCoreApplication::applicationDirPath().toStdString() + "/" + SERVER_ROOT;
+    std::string serverPath = QCoreApplication::applicationDirPath().toStdString() + "/assets";
+
+#ifdef SERVER_ROOT
+    serverPath = SERVER_ROOT;
+#endif
+
     qInfo() << QString::fromStdString(serverPath);
     this->server = new WebServer("0.0.0.0", 8000, serverPath.c_str());
+
+
     ui->setupUi(this);
     webViewManager->hide();
 
